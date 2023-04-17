@@ -5,6 +5,7 @@ import (
 	"PelandoChallenge/pkg/service/internal/repository"
 	"PelandoChallenge/pkg/service/internal/scraper"
 	"context"
+	"fmt"
 )
 
 type ProductInterface interface {
@@ -22,6 +23,7 @@ func (p *product) GetProduct(ctx context.Context, url string) (*model.Product, e
 	}
 
 	if product != nil && product.IsWithinTimeThreshold() {
+		fmt.Println("Retornando informações do DB")
 		return product, nil
 	}
 
@@ -30,6 +32,7 @@ func (p *product) GetProduct(ctx context.Context, url string) (*model.Product, e
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("Informações buscadas no site fonte")
 
 	return scrapedProduct, p.productRepository.SaveProduct(ctx, scrapedProduct)
 }

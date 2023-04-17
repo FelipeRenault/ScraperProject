@@ -13,6 +13,7 @@ type Product struct {
 	UpdatedAt   time.Time `db:"updated_at"      json:"-"`
 }
 
+// Propositalmente deixado como 1 minuto para facilitar verificar se está puxando do banco ou não
 var maxTimeThreshold = time.Minute
 
 func (p Product) IsWithinTimeThreshold() bool {
