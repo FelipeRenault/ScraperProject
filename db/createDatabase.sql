@@ -1,14 +1,14 @@
 USE pelando;
 
 CREATE TABLE products (
-    id int NOT NULL AUTO_INCREMENT,
-    url varchar(200),
-    title varchar(200),
-    image varchar(200),
-    price int,
-    description varchar(200),
-    created_at datetime not null DEFAULT CURRENT_TIMESTAMP,
-    updated_at datetime not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    id INT NOT NULL AUTO_INCREMENT,
+    url VARCHAR(200),
+    title VARCHAR(200),
+    image VARCHAR(200),
+    price INT,
+    description TEXT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE (url)
 );

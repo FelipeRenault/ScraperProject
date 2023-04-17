@@ -10,14 +10,13 @@ services:
       MYSQL_DATABASE: pelando
       MYSQL_USER: MainUser
       MYSQL_PASSWORD: MainPassword
+      TZ: "America/Sao_Paulo"
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
       start_period: 5s
       interval: 5s
       timeout: 5s
       retries: 10
-    # volumes:
-    #   - db-volume:/var/lib/mysql
   
   app:
     image: pelando
@@ -26,6 +25,3 @@ services:
         condition: service_healthy
     ports:
       - "8080:8080"
-
-# volumes:
-#     db-volume:

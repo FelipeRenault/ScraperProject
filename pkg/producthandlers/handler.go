@@ -1,10 +1,12 @@
 package producthandlers
 
 import (
-	"PelandoChallenge/pkg/service"
-	"encoding/json"
-	"fmt"
+	"errors"
 	"net/http"
+
+	libErrors "PelandoChallenge/pkg/lib/errors"
+	"PelandoChallenge/pkg/lib/httphelper"
+	"PelandoChallenge/pkg/service"
 )
 
 type ProductHandler struct {
@@ -24,10 +26,13 @@ func (p *ProductHandler) HandleProduct(w http.ResponseWriter, r *http.Request) {
 
 	product, err := p.service.Product.GetProduct(ctx, url)
 	if err != nil {
-		fmt.Println("Error fetching product:", err)
+		if errors.Is(err, libErrors.ErrSiteNotAvailable) {
+			httphelper.BadRequest(w, err.Error())
+			return
+		}
+		httphelper.InternalError(w, err.Error())
 		return
 	}
 
-	w.Header().Set("Content-type", "application/json; charset=utf-8")
-	json.NewEncoder(w).Encode(product)
+	httphelper.RenderJSON(w, product)
 }

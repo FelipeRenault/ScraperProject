@@ -3,6 +3,7 @@ package service
 import (
 	"PelandoChallenge/pkg/model"
 	"PelandoChallenge/pkg/service/internal/repository"
+	"PelandoChallenge/pkg/service/internal/scraper"
 	"context"
 )
 
@@ -24,7 +25,11 @@ func (p *product) GetProduct(ctx context.Context, url string) (*model.Product, e
 		return product, nil
 	}
 
-	// Fetch from website
+	scrapedProduct := &model.Product{URL: url}
+	err = scraper.Scrape(ctx, scrapedProduct)
+	if err != nil {
+		return nil, err
+	}
 
-	return nil, nil
+	return scrapedProduct, p.productRepository.SaveProduct(ctx, scrapedProduct)
 }

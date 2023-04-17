@@ -33,7 +33,8 @@ var (
 			title = VALUES(title),
 			image = VALUES(image),
 			price = VALUES(price),
-			description = VALUES(description);
+			description = VALUES(description),
+			updated_at = NOW();
 	`
 
 	queryGetProduct = `
@@ -67,6 +68,13 @@ func (p *productRepository) GetProductByURL(ctx context.Context, url string) (*m
 }
 
 func (p *productRepository) SaveProduct(ctx context.Context, product *model.Product) error {
-	_, err := p.db.Exec(execSaveProduct, product.URL, product.Title)
+	_, err := p.db.Exec(
+		execSaveProduct,
+		product.URL,
+		product.Title,
+		product.Image,
+		product.Price,
+		product.Description,
+	)
 	return err
 }

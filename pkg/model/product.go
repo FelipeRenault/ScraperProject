@@ -3,17 +3,17 @@ package model
 import "time"
 
 type Product struct {
-	ID          int       `json:"id" db:"id"`
-	URL         string    `json:"url" db:"url"`
-	Title       string    `json:"title" db:"title"`
-	Image       string    `json:"image" db:"image"`
-	Price       int       `json:"price" db:"price"`
-	Description string    `json:"description" db:"description"`
-	CreatedAt   time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
+	ID          int       `db:"id"              json:"-"`
+	URL         string    `db:"url"             json:"url"`
+	Title       string    `db:"title"           json:"title"`
+	Image       string    `db:"image"           json:"image"`
+	Price       int       `db:"price"           json:"price"`
+	Description string    `db:"description"     json:"description"`
+	CreatedAt   time.Time `db:"created_at"      json:"-"`
+	UpdatedAt   time.Time `db:"updated_at"      json:"-"`
 }
 
-var maxTimeThreshold = time.Hour
+var maxTimeThreshold = time.Minute
 
 func (p Product) IsWithinTimeThreshold() bool {
 	oldestAllowed := time.Now().Add(-maxTimeThreshold)
