@@ -1,4 +1,4 @@
-# PelandoChallenge
+# ScraperRepository
 
 ## Requisitos
 
